@@ -1,0 +1,29 @@
+[user]  
+    name = sphantix 
+    email = sphantix@gmail.com
+[core]
+	editor = vim
+[color]
+    status = auto
+    branch = auto
+    diff = auto
+    ui = true
+    pager = true
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    df = difftool -y
+    st = status
+    co = checkout
+    ci = commit
+    brs = branch -avv
+    brd = branch -d
+    unstage = reset HEAD
+    last = log -1 HEAD
+[diff]
+    tool = meld
+	external = ~/.tool/script/git_meld
+[merge]
+    tool = meld
+
+[push]
+	default = matching

@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/hyman/study/cplus/lib/glog-0.3.3/src'
+let g:netrw_dirhist_2='/home/hangxu/.vim'
+let g:netrw_dirhist_3='/home/hangxu/openwrt/build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_mt7620a/linux-3.10.49/init'
+let g:netrw_dirhist_4='/home/hangxu/trunk_openwrt/cms/userspace/private/libs/cms_core/linux'
+let g:netrw_dirhist_5='/home/hyman/work/router/hi-wifi_openwrt/customer/packages/others'
+let g:netrw_dirhist_6='/home/hyman/work/router/hi-wifi_openwrt/customer/packages/others/opkg'
+let g:netrw_dirhist_7='/home/hyman/study/django/mysite'
+let g:netrw_dirhist_8='/home/hyman/work/router/hi-wifi_openwrt/customer/packages/others/wifidog/src'
