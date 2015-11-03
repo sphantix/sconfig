@@ -1,4 +1,4 @@
 #!/bin/sh
-ctags -R --c-kinds=+p --fields=+S --sort=foldcase
+ctags -R --c-kinds=+p --fields=+aS --extra=+q --sort=foldcase
 find $(pwd) -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files
 cscope -i cscope.files -Rbkq
