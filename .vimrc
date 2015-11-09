@@ -62,7 +62,8 @@ set history=50                                        " keep 50 lines of command
 set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
 colorscheme koehler
 set tags+=tags;/
-set tags+=~/.vim/tags/cpp                             "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+autocmd FileType cpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+autocmd FileType python set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
 set autochdir
 set ruler                                             " show the cursor position all the time 
 set showcmd                                           " display incomplete commands 
@@ -221,6 +222,10 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
 set completeopt=menuone,menu,longest,preview
+
+" OmniCppComplete also support completing other language
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType c set omnifunc=ccomplete#Complete
 
 "对NERD_commenter的设置
 "let NERDShutUp=1
