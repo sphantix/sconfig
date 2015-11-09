@@ -8,8 +8,8 @@ my initial config for linux, including:<br>
 .gitconfig<br>
 .bash\_aliases<br>
 
-#Usage
-```shell
+##Usage
+```Bash
 $git clone https://github.com/sphantix/config.git
 $cp config/* ~/
 ```
