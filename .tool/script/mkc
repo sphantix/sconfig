@@ -1,0 +1,13 @@
+#!/bin/bash
+
+FILE=`ls $1`                    #get file full name
+NAME="${FILE%.*}"               #get file name
+EXTNAME="${FILE#*.}"            #get extention name
+
+if [ "$EXTNAME" = "c" ];then    #if c file use gcc
+    gcc -o $NAME -Werror $1
+elif [ "$EXTNAME" = "cc" ];then #if c++ file use g++, support c++11
+    g++ -o $NAME -std=c++0x -Werror $1
+elif ["$EXTNAME" = "cpp" ];then
+    g++ -o $NAME -std=c++0x -Werror $1
+fi
