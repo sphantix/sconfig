@@ -1,9 +1,15 @@
 # config
-my initial config for linux, including:
-.vimrc
-.vim/
-.bashrc
-.bash_aliases
-.tool/
-.gitconfig
+##Description
+my initial config for linux, including:<br>
+.vimrc<br>
+.vim/<br>
+.bashrc<br>
+.tool/<br>
+.gitconfig<br>
+.bash\_aliases<br>
 
+#Usage
+```shell
+$git clone https://github.com/sphantix/config.git
+$cp config/* ~/
+```
