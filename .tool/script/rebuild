@@ -12,7 +12,7 @@ if [ $# -ne 1 ]; then
 fi
 
 if [ $1 = "c" ]; then
-    ctags -R --c-kinds=+p --fields=+S --sort=foldcase
+    ctags -R --c-kinds=+p --fields=+aS --extra=+q --sort=foldcase
     find $(pwd) -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files
 elif [ $1 = "cpp" ]; then
     ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --langmap=c++:+.inl .
