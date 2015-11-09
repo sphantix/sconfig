@@ -225,7 +225,6 @@ set completeopt=menuone,menu,longest,preview
 
 " OmniCppComplete also support completing other language
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType c set omnifunc=ccomplete#Complete
 
 "对NERD_commenter的设置
 "let NERDShutUp=1
