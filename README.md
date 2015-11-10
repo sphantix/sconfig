@@ -11,5 +11,6 @@ my initial config for linux, including:<br>
 ##Usage
 ```Bash
 $git clone https://github.com/sphantix/config.git
-$cp config/* ~/
+$cd config
+$./initial.sh
 ```
