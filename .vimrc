@@ -1,17 +1,13 @@
 " Hyman's vimrc file.
 " 
 " Maintainer: Hyman 
-" Last change: 2015 Aug 1
+" Last change: 2015 Nov 10
 "
 " To use it, copy it to
 " for Unix and OS/2: ~/.vimrc
 " for Amiga: s:.vimrc 
 " for MS-DOS and Win32: $VIM\_vimrc 
 " for OpenVMS: sys$login:.vimrc 
-
-" =============================================================================
-"                          << 以下为用户自定义配置 >>
-" =============================================================================
 
 " -----------------------------------------------------------------------------
 "  < Vundle 插件管理工具配置 >
@@ -34,7 +30,8 @@ Plugin 'gmarik/Vundle.vim'
 "Bundle 'L9'  
 Bundle 'a.vim'
 Bundle 'taglist.vim'
-Bundle 'The-NERD-tree' 
+Bundle 'The-NERD-tree'
+Bundle 'Pydiction'
 
 " b) 指定Github中其他用户仓库的插件，使用“用户名/插件名称”的方式指定  
 "Bundle 'tpope/vim-fugitive'  
@@ -56,14 +53,16 @@ call vundle#end()            " required
 filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
+syntax on
+set ic
 set background=dark
 au BufNewFile,BufRead *.php,*.module,*.install,*.php\d		setf php
 set history=50                                        " keep 50 lines of command line history 
 set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
 colorscheme koehler
 set tags+=tags;/
-autocmd FileType cpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
-autocmd FileType python set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
 set autochdir
 set ruler                                             " show the cursor position all the time 
 set showcmd                                           " display incomplete commands 
@@ -75,9 +74,7 @@ set backspace=indent,eol,start                        " allow backspacing over e
 set autoindent                                        " always set autoindenting on 
 " set nobackup                                        " do not keep a backup file, use versions instead 
 set backup                                            " keep a backup file 
-
 set fencs=utf-8,cp936
-set incsearch                                         " do incremental searching 
 set autowrite                                         " automatically write current buffer
 set autoindent                                        " autoindent
 set smartindent
@@ -91,27 +88,19 @@ set fileformat=unix
 " Don't use Ex mode, use Q for formatting 
 map Q gq 
 
-" This is an alternative that also works in block mode, but the deleted 
-" text is lost and it only works for putting the current register. 
-"vnoremap p "_dp 
-
-" Switch syntax highlighting on, when the terminal has colors 
-" Also switch on highlighting the last used search pattern. 
-if &t_Co > 2 || has("gui_running") 
- set hlsearch 
-endif 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" < 搜索配置 >
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set incsearch  "  increament search: like search in modern browsers
+set hlsearch   "  Highlight search results
+set ignorecase "  Ignore case when searching
+set smartcase  "  When searching try to be smart about cases
+set magic      "  For regular expressions turn magic on
 
 " Only do this part when compiled with support for autocommands. 
-if has("autocmd") 
 " For all text files set 'textwidth' to 78 characters. 
 autocmd FileType text setlocal textwidth=78 
-endif
 
-" build tags of your own project with Ctrl-F12
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
-syntax on
-set ic
 " -----------------------------------------------------------------------------
 "  < 代码折叠 >
 " -----------------------------------------------------------------------------
@@ -126,6 +115,14 @@ set foldmethod=syntax
 set foldlevel=100       " Don't autofold anything 
 set foldopen-=search   " don't open folds when you search into them
 set foldopen-=undo     " don't open folds when you undo stuff
+
+" -----------------------------------------------------------------------------
+" < 文件打开后回到上次输入的地方 >
+" -----------------------------------------------------------------------------
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
 
 " -----------------------------------------------------------------------------
 "  < 自动补齐>
@@ -190,7 +187,9 @@ let g:SrcExpl_prevDefKey = "<F11>"
 let g:SrcExpl_nextDefKey = "<F12>"
 let g:SrcExpl_isUpdateTags = 0
 
-"doxygen toolkit 
+" -----------------------------------------------------------------------------
+"  < DoxygenToolkit 插件配置 >
+" -----------------------------------------------------------------------------
 let g:DoxygenToolkit_briefTag_pre="@synopsis  "
 let g:DoxygenToolkit_paramTag_pre="@param "
 let g:DoxygenToolkit_returnTag="@returns   "
@@ -209,7 +208,9 @@ let g:doxygen_enhanced_color=1
 map <F2> :DoxAuthor <CR>
 map <F3> :Dox <CR>
 
-" OmniCppComplete
+" -----------------------------------------------------------------------------
+"  < OmniCppComplete 插件配置 >
+" -----------------------------------------------------------------------------
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
 let OmniCpp_ShowAccess = 1
@@ -223,8 +224,56 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
 set completeopt=menuone,menu,longest,preview
 
-" OmniCppComplete also support completing other language
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-"对NERD_commenter的设置
+" -----------------------------------------------------------------------------
+"  < NERD_commenter 插件配置 >
+" -----------------------------------------------------------------------------
 "let NERDShutUp=1
+
+" -----------------------------------------------------------------------------
+"  < Pydiction 插件配置 >
+" -----------------------------------------------------------------------------
+au BufNewFile,BufRead,BufEnter *.py let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
+au BufNewFile,BufRead,BufEnter *.py let g:pydiction_menu_height = 20 
+
+" -----------------------------------------------------------------------------
+" < 创建新文件时自动加入文件头部 >
+" -----------------------------------------------------------------------------
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py exec ":call SetTitle()"
+""function SetTitle
+func SetTitle()
+ if &filetype == 'sh'
+  call setline(1,"\#!/bin/bash")
+  call append(line("."),"# author : sphantix")
+  call append(line(".")+1, "")
+ elseif &filetype == 'python'
+  call setline(1,"#!/usr/bin/env python")
+  call append(line("."),"# -*- coding: UTF-8 -*-")
+  call append(line(".")+1,"# author : sphantix")
+  call append(line(".")+2, "")
+ else
+  call setline(1, "/*************************************************************************") 
+  call append(line("."), " > File Name: ".expand("%"))
+  call append(line(".")+1, " > Author: Sphantix")
+  call append(line(".")+2, " > Mail: sphantix@gmail.com")
+  call append(line(".")+3, " > Created Time: ".strftime("%c"))
+  call append(line(".")+4, " ************************************************************************/") 
+  call append(line(".")+5, "")
+ endif
+
+ if expand("%:e") == 'cpp'
+  call append(line(".")+6, "#include<string>")
+  call append(line(".")+7, "")
+ endif
+ if &filetype == 'c'
+  call append(line(".")+6, "#include<stdio.h>")
+  call append(line(".")+7, "")
+ endif
+ if expand("%:e") == 'h'
+  call append(line(".")+6, "#ifndef __".toupper(expand("%:r"))."_H__")
+  call append(line(".")+7, "#define __".toupper(expand("%:r"))."_H__")
+  call append(line(".")+8, "#endif /* __".toupper(expand("%:r"))."_H__ */")
+ endif
+
+"after creating new file, go to the end of the file
+endfunc
+autocmd BufNewFile * normal G
