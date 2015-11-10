@@ -88,9 +88,9 @@ set fileformat=unix
 " Don't use Ex mode, use Q for formatting 
 map Q gq 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -----------------------------------------------------------------------------
 " < 搜索配置 >
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" -----------------------------------------------------------------------------
 set incsearch  "  increament search: like search in modern browsers
 set hlsearch   "  Highlight search results
 set ignorecase "  Ignore case when searching
@@ -251,12 +251,12 @@ func SetTitle()
   call append(line(".")+1,"# author : sphantix")
   call append(line(".")+2, "")
  else
-  call setline(1, "/*************************************************************************") 
-  call append(line("."), " > File Name: ".expand("%"))
-  call append(line(".")+1, " > Author: Sphantix")
-  call append(line(".")+2, " > Mail: sphantix@gmail.com")
-  call append(line(".")+3, " > Created Time: ".strftime("%c"))
-  call append(line(".")+4, " ************************************************************************/") 
+  call setline(1, "/*") 
+  call append(line("."), " * File Name: ".expand("%"))
+  call append(line(".")+1, " * Author: Sphantix")
+  call append(line(".")+2, " * Mail: sphantix@gmail.com")
+  call append(line(".")+3, " * Created Time: ".strftime("%c"))
+  call append(line(".")+4, " */") 
   call append(line(".")+5, "")
  endif
 
@@ -271,7 +271,10 @@ func SetTitle()
  if expand("%:e") == 'h'
   call append(line(".")+6, "#ifndef __".toupper(expand("%:r"))."_H__")
   call append(line(".")+7, "#define __".toupper(expand("%:r"))."_H__")
-  call append(line(".")+8, "#endif /* __".toupper(expand("%:r"))."_H__ */")
+  call append(line(".")+8, "")
+  call append(line(".")+9, "")
+  call append(line(".")+10, "")
+  call append(line(".")+11, "#endif /* __".toupper(expand("%:r"))."_H__ */")
  endif
 
 "after creating new file, go to the end of the file
