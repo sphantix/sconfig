@@ -37,7 +37,9 @@ if has("cscope")
     set csto=0
 
     " add any cscope database in current directory
-    if filereadable("../cscope.out")
+    if filereadable("./cscope.out")
+        cs add ./cscope.out
+    elseif filereadable("../cscope.out")
         cs add ../cscope.out
     elseif filereadable("../../cscope.out")
         cs add ../../cscope.out
