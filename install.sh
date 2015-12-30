@@ -2,6 +2,7 @@
 # author : sphantix
 
 os=`uname`
+mac_bash_profile="$HOME/.bash_profile"
 
 echo "install all config.."
 
@@ -15,13 +16,14 @@ cp -rf ./.gitconfig ~/
 #Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-#for differences
+#For differences
 if [ $os = "Darwin" ]; then
-    r=`grep '.bashrc' ~/.bash_profiles`
-    if [ -z "$$r" ]; then
-        echo 'if [ -f ~/.bashrc ]; then' >> ~/.bash_profiles
-        echo '   source ~/.bashrc' >> ~/.bash_profiles
-        echo 'fi' >> ~/.bash_profiles
+    touch $mac_bash_profile
+    r=`grep '.bashrc' $mac_bash_profile`
+    if [ "x$r" = "x" ]; then
+        echo 'if [ -f ~/.bashrc ]; then' >> $mac_bash_profile
+        echo '   source ~/.bashrc' >> $mac_bash_profile
+        echo 'fi' >> $mac_bash_profile
     fi
 fi
 
