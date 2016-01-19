@@ -23,7 +23,9 @@ call vundle#begin()
 
 " let Vundle manage Vundle  
 " required!   
-Plugin 'gmarik/Vundle.vim' 
+Plugin 'gmarik/Vundle.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'fatih/vim-go'
 
 " 可以通过以下四种方式指定插件的来源  
 " a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。  
@@ -38,8 +40,10 @@ Bundle 'Pydiction'
 "Bundle 'Lokaltog/vim-easymotion'  
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}  
 "Bundle 'tpope/vim-rails.git'
+Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
-  
+Bundle "scrooloose/syntastic"
+ 
 " c) 指定非Github的Git仓库的插件，需要使用git地址  
 "Bundle 'git://git.wincent.com/command-t.git'  
   
@@ -228,6 +232,91 @@ set completeopt=menuone,menu,longest,preview
 "  < NERD_commenter 插件配置 >
 " -----------------------------------------------------------------------------
 "let NERDShutUp=1
+
+" -----------------------------------------------------------------------------
+"  < vim-go 插件配置 >
+" -----------------------------------------------------------------------------
+" set mapleader
+au FileType go let mapleader = ","
+
+" vim-go custom mappings
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+let g:go_fmt_command = "goimports"
+
+" -----------------------------------------------------------------------------
+"  < UltiSnips 插件配置 >
+" -----------------------------------------------------------------------------
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" -----------------------------------------------------------------------------
+"  < syntastic 插件配置 >
+" -----------------------------------------------------------------------------
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_error_symbol = '✗'      "set error or warning signs
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_check_on_open= 1
+let g:syntastic_check_on_close= 1
+let g:syntastic_aggregate_errors = 1 " collect errors when use multple checkers  
+let g:syntastic_ignore_files=[".*\.py$"] "禁用syntastic来对python检查  
+
+" -----------------------------------------------------------------------------
+"  < tagbar 插件配置 >
+" -----------------------------------------------------------------------------
+nmap <F6> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_left = 1
+let g:tagbar_expand = 1
+let g:tagbar_compact = 1
+let g:tagbar_singleclick = 1
+let g:tagbar_autoshowtag = 1
+let g:tagbar_ctags_bin = 'ctags'
+let g:tagbar_width = 30
+
+" go语言的tagbar配置
+" 1.install gotags 'go get -u github.com/jstemmer/gotags'
+" 2.make sure `gotags` in you shell PATH, you can call check it with `which gotags`
+" for gotags. work with tagbar
+let g:tagbar_type_go = {  
+    \ 'ctagstype' : 'go',  
+    \ 'kinds'     : [  
+        \ 'p:package',  
+        \ 'i:imports:1',  
+        \ 'c:constants',  
+        \ 'v:variables',  
+        \ 't:types',  
+        \ 'n:interfaces',  
+        \ 'w:fields',  
+        \ 'e:embedded',  
+        \ 'm:methods',  
+        \ 'r:constructor',  
+        \ 'f:functions'  
+    \ ],  
+    \ 'sro' : '.',  
+    \ 'kind2scope' : {  
+        \ 't' : 'ctype',  
+        \ 'n' : 'ntype'  
+    \ },  
+    \ 'scope2kind' : {  
+        \ 'ctype' : 't',  
+        \ 'ntype' : 'n'  
+    \ },  
+    \ 'ctagsbin'  : 'gotags',  
+    \ 'ctagsargs' : '-sort -silent'  
+\ }
 
 " -----------------------------------------------------------------------------
 "  < Pydiction 插件配置 >
