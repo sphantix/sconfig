@@ -30,8 +30,8 @@ Plugin 'fatih/vim-go'
 " 可以通过以下四种方式指定插件的来源  
 " a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。  
 "Bundle 'L9'  
-Bundle 'a.vim'
 Bundle 'taglist.vim'
+Bundle 'a.vim'
 Bundle 'The-NERD-tree'
 Bundle 'Pydiction'
 
@@ -40,6 +40,7 @@ Bundle 'Pydiction'
 "Bundle 'Lokaltog/vim-easymotion'  
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}  
 "Bundle 'tpope/vim-rails.git'
+Bundle 'bling/vim-airline'
 Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
 Bundle "scrooloose/syntastic"
@@ -70,6 +71,7 @@ au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomple
 set autochdir
 set ruler                                             " show the cursor position all the time 
 set showcmd                                           " display incomplete commands 
+set t_Co=256                                          " 256 colors
 
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
@@ -152,6 +154,23 @@ endf
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " -----------------------------------------------------------------------------
+"  < vim-airline 插件配置 >
+" -----------------------------------------------------------------------------
+let g:airline_theme="luna" 
+
+"打开tabline功能,方便查看Buffer和切换，这个功能比较不错"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"设置切换Buffer快捷键"
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+
+" 关闭状态显示空白符号计数,这个对我用处不大"
+"let g:airline#extensions#whitespace#enabled = 0
+"let g:airline#extensions#whitespace#symbol = '!'
+
+" -----------------------------------------------------------------------------
 "  < TagList 插件配置 >
 " -----------------------------------------------------------------------------
 " 高效地浏览源码, 其功能就像vc中的workpace
@@ -177,6 +196,9 @@ nmap <F9> :NERDTreeToggle<CR>
 
 let NERDTreeWinPos = 'right'
 let NERDTreeChDirMode=2
+
+"如果NERDTree窗口是最后一个窗口则退出Vim
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " -----------------------------------------------------------------------------
 "  < SrcExpl 插件配置 >
@@ -253,12 +275,13 @@ au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 au FileType go nmap <Leader>e <Plug>(go-rename)
 
+"let g:go_def_mapping_enabled = 0  "enable gd to jump definition
 let g:go_fmt_command = "goimports"
 
 " -----------------------------------------------------------------------------
 "  < UltiSnips 插件配置 >
 " -----------------------------------------------------------------------------
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-e>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
