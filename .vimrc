@@ -53,21 +53,24 @@ Bundle "scrooloose/syntastic"
 call vundle#end()            " required
 
 " -----------------------------------------------------------------------------
-"  < 环境配置 >
+"  < FileType 设置 >
 " -----------------------------------------------------------------------------
 filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+
+" -----------------------------------------------------------------------------
+"  < 环境配置 >
+" -----------------------------------------------------------------------------
 syntax on
 set ic
 set background=dark
-au BufNewFile,BufRead *.php,*.module,*.install,*.php\d		setf php
 set history=50                                        " keep 50 lines of command line history 
 set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
 colorscheme koehler
 set tags+=tags;/
-au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
-au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
 set autochdir
 set ruler                                             " show the cursor position all the time 
 set showcmd                                           " display incomplete commands 
@@ -131,19 +134,26 @@ autocmd BufReadPost *
      \ endif
 
 " -----------------------------------------------------------------------------
-"  < 自动补齐>
+"  < 自动补齐标点符号>
 " -----------------------------------------------------------------------------
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i<Enter><ESC><s-o>
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-inoremap < <><ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap ] <c-r>=ClosePair(']')<CR>
-":inoremap ' <c-r>=ClosePair(''')<CR>
-":inoremap " <c-r>=ClosePair('"')<CR>
+autocmd BufNewFile,BufRead,BufEnter *.* exec ":call AutoCompletePunctuation()"
+
+func AutoCompletePunctuation()
+    :inoremap ( ()<ESC>i
+    :inoremap [ []<ESC>i
+    if &filetype == "c" || &filetype == "cpp" || &filetype == "h" || &filetype == "cc" || &filetype == "hpp"
+        :inoremap { {}<ESC>i<Enter><ESC><s-o>
+    else
+        :inoremap { {}<ESC>i
+    endif
+    :inoremap ' ''<ESC>i
+    :inoremap " ""<ESC>i
+    :inoremap < <><ESC>i
+    :inoremap ) <c-r>=ClosePair(')')<CR>
+    :inoremap } <c-r>=ClosePair('}')<CR>
+    :inoremap ] <c-r>=ClosePair(']')<CR>
+endfunc
+
 func! ClosePair(char)
     if getline('.')[col('.') -1] == a:char
         return "\<Right>"
@@ -350,45 +360,50 @@ au BufNewFile,BufRead,BufEnter *.py let g:pydiction_menu_height = 20
 " -----------------------------------------------------------------------------
 " < 创建新文件时自动加入文件头部 >
 " -----------------------------------------------------------------------------
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py exec ":call SetTitle()"
+autocmd BufNewFile *.* exec ":call SetTitle()"
 ""function SetTitle
 func SetTitle()
- if &filetype == 'sh'
-  call setline(1,"\#!/bin/bash")
-  call append(line("."),"# author : sphantix")
-  call append(line(".")+1, "")
- elseif &filetype == 'python'
-  call setline(1,"#!/usr/bin/env python")
-  call append(line("."),"# -*- coding: UTF-8 -*-")
-  call append(line(".")+1,"# author : sphantix")
-  call append(line(".")+2, "")
- else
-  call setline(1, "/*") 
-  call append(line("."), " * File Name: ".expand("%"))
-  call append(line(".")+1, " * Author: Sphantix")
-  call append(line(".")+2, " * Mail: sphantix@gmail.com")
-  call append(line(".")+3, " * Created Time: ".strftime("%c"))
-  call append(line(".")+4, " */") 
-  call append(line(".")+5, "")
- endif
+    if &filetype == 'sh'
+        call setline(1,"\#!/bin/bash")
+        call append(line("."),"# author : sphantix")
+        call append(line(".")+1, "")
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# -*- coding: UTF-8 -*-")
+        call append(line(".")+1,"# author : sphantix")
+        call append(line(".")+2, "")
+    else
+        call setline(1, "/*") 
+        call append(line("."), " * File Name: ".expand("%"))
+        call append(line(".")+1, " * Author: Sphantix")
+        call append(line(".")+2, " * Mail: sphantix@gmail.com")
+        call append(line(".")+3, " * Created Time: ".strftime("%c"))
+        call append(line(".")+4, " */") 
+        call append(line(".")+5, "")
+    endif
 
- if expand("%:e") == 'cpp'
-  call append(line(".")+6, "#include <string>")
-  call append(line(".")+7, "")
- endif
- if &filetype == 'c'
-  call append(line(".")+6, "#include \"".expand("%:r").".h\"")
-  call append(line(".")+7, "")
- endif
- if expand("%:e") == 'h'
-  call append(line(".")+6, "#ifndef __".toupper(expand("%:r"))."_H__")
-  call append(line(".")+7, "#define __".toupper(expand("%:r"))."_H__")
-  call append(line(".")+8, "")
-  call append(line(".")+9, "")
-  call append(line(".")+10, "")
-  call append(line(".")+11, "#endif /* __".toupper(expand("%:r"))."_H__ */")
- endif
+    if expand("%:e") == 'cpp' || expand("%:e") == 'cc'
+        call append(line(".")+6, "#include <string>")
+        call append(line(".")+7, "")
+    elseif expand("%:e") == 'c'
+        call append(line(".")+6, "#include \"".expand("%:r").".h\"")
+        call append(line(".")+7, "")
+    elseif expand("%:e") == 'h'
+        call append(line(".")+6, "#ifndef __".toupper(expand("%:r"))."_H__")
+        call append(line(".")+7, "#define __".toupper(expand("%:r"))."_H__")
+        call append(line(".")+8, "")
+        call append(line(".")+9, "")
+        call append(line(".")+10, "")
+        call append(line(".")+11, "#endif /* __".toupper(expand("%:r"))."_H__ */")
+    elseif expand("%:e") == 'hpp'
+        call append(line(".")+6, "#ifndef __".toupper(expand("%:r"))."_HPP__")
+        call append(line(".")+7, "#define __".toupper(expand("%:r"))."_HPP__")
+        call append(line(".")+8, "")
+        call append(line(".")+9, "")
+        call append(line(".")+10, "")
+        call append(line(".")+11, "#endif /* __".toupper(expand("%:r"))."_HPP__ */")
+    endif
 
-"after creating new file, go to the end of the file
+    "after creating new file, go to the end of the file
 endfunc
 autocmd BufNewFile * normal G
