@@ -26,6 +26,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'fatih/vim-go'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " 可以通过以下四种方式指定插件的来源  
 " a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。  
@@ -40,7 +42,6 @@ Bundle 'Pydiction'
 "Bundle 'Lokaltog/vim-easymotion'  
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}  
 "Bundle 'tpope/vim-rails.git'
-Bundle 'bling/vim-airline'
 Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
 Bundle "scrooloose/syntastic"
@@ -171,6 +172,8 @@ let g:airline_theme="luna"
 "打开tabline功能,方便查看Buffer和切换，这个功能比较不错"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "设置切换Buffer快捷键"
 nnoremap <C-N> :bn<CR>
