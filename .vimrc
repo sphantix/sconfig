@@ -59,7 +59,7 @@ call vundle#end()            " required
 filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
-au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h set tags+=~/.vim/tags/cpp        "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
 au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomplete" configure tags - add additional tags here or comment out not-used ones
 
 " -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " -----------------------------------------------------------------------------
 "  < vim-airline 插件配置 >
 " -----------------------------------------------------------------------------
-let g:airline_theme="luna" 
+let g:airline_theme='luna'
 
 "打开tabline功能,方便查看Buffer和切换，这个功能比较不错"
 let g:airline#extensions#tabline#enabled = 1
@@ -307,7 +307,10 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_check_on_open= 1
 let g:syntastic_check_on_close= 1
 let g:syntastic_aggregate_errors = 1 " collect errors when use multple checkers  
-let g:syntastic_ignore_files=[".*\.py$"] "禁用syntastic来对python检查  
+let g:syntastic_ignore_files=[".*\.py$"] "禁用syntastic来对python检查
+" for c++
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
 " -----------------------------------------------------------------------------
 "  < tagbar 插件配置 >
