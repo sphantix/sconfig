@@ -1,13 +1,13 @@
-" Hyman's vimrc file.
-" 
-" Maintainer: Hyman 
-" Last change: 2015 Nov 10
+" Sphantix's vimrc file.
+"
+" Maintainer: Sphantix
+" Last change: 2016 Apri 15
 "
 " To use it, copy it to
 " for Unix and OS/2: ~/.vimrc
-" for Amiga: s:.vimrc 
-" for MS-DOS and Win32: $VIM\_vimrc 
-" for OpenVMS: sys$login:.vimrc 
+" for Amiga: s:.vimrc
+" for MS-DOS and Win32: $VIM\_vimrc
+" for OpenVMS: sys$login:.vimrc
 
 " -----------------------------------------------------------------------------
 "  < Vundle 插件管理工具配置 >
@@ -15,42 +15,43 @@
 " 用于更方便的管理vim插件，具体用法参考 :h vundle 帮助
 " Vundle工具安装方法为在终端输入如下命令
 " git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-set nocompatible 
+set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle  
-" required!   
+" let Vundle manage Vundle
+" required!
 Plugin 'gmarik/Vundle.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'fatih/vim-go'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'mbbill/undotree'
 
-" 可以通过以下四种方式指定插件的来源  
-" a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。  
-"Bundle 'L9'  
+" 可以通过以下四种方式指定插件的来源
+" a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。
+"Bundle 'L9'
 Bundle 'taglist.vim'
 Bundle 'a.vim'
 Bundle 'The-NERD-tree'
 Bundle 'Pydiction'
 
-" b) 指定Github中其他用户仓库的插件，使用“用户名/插件名称”的方式指定  
-"Bundle 'tpope/vim-fugitive'  
-"Bundle 'Lokaltog/vim-easymotion'  
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}  
+" b) 指定Github中其他用户仓库的插件，使用“用户名/插件名称”的方式指定
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "Bundle 'tpope/vim-rails.git'
 Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
 Bundle "scrooloose/syntastic"
- 
-" c) 指定非Github的Git仓库的插件，需要使用git地址  
-"Bundle 'git://git.wincent.com/command-t.git'  
-  
-" d) 指定本地Git仓库中的插件  
+
+" c) 指定非Github的Git仓库的插件，需要使用git地址
+"Bundle 'git://git.wincent.com/command-t.git'
+
+" d) 指定本地Git仓库中的插件
 "Bundle 'file:///Users/gmarik/path/to/plugin'
 call vundle#end()            " required
 
@@ -69,22 +70,22 @@ au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomple
 syntax on
 set ic
 set background=dark
-set history=50                                        " keep 50 lines of command line history 
+set history=50                                        " keep 50 lines of command line history
 set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
 colorscheme koehler
 set tags+=tags;/
 set autochdir
-set ruler                                             " show the cursor position all the time 
-set showcmd                                           " display incomplete commands 
+set ruler                                             " show the cursor position all the time
+set showcmd                                           " display incomplete commands
 set t_Co=256                                          " 256 colors
 
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
-set backspace=indent,eol,start                        " allow backspacing over everything in insert mode 
-set autoindent                                        " always set autoindenting on 
-" set nobackup                                        " do not keep a backup file, use versions instead 
-set backup                                            " keep a backup file 
+set backspace=indent,eol,start                        " allow backspacing over everything in insert mode
+set autoindent                                        " always set autoindenting on
+" set nobackup                                        " do not keep a backup file, use versions instead
+set backup                                            " keep a backup file
 set fencs=utf-8,cp936
 set autowrite                                         " automatically write current buffer
 set autoindent                                        " autoindent
@@ -96,8 +97,8 @@ set expandtab
 set number 		                                	  " show line numbers
 set fileformat=unix
 
-" Don't use Ex mode, use Q for formatting 
-map Q gq 
+" Don't use Ex mode, use Q for formatting
+map Q gq
 
 " -----------------------------------------------------------------------------
 " < 搜索配置 >
@@ -108,22 +109,22 @@ set ignorecase "  Ignore case when searching
 set smartcase  "  When searching try to be smart about cases
 set magic      "  For regular expressions turn magic on
 
-" Only do this part when compiled with support for autocommands. 
-" For all text files set 'textwidth' to 78 characters. 
-autocmd FileType text setlocal textwidth=78 
+" Only do this part when compiled with support for autocommands.
+" For all text files set 'textwidth' to 78 characters.
+autocmd FileType text setlocal textwidth=78
 
 " -----------------------------------------------------------------------------
 "  < 代码折叠 >
 " -----------------------------------------------------------------------------
-"用空格键来开关折叠    
-set foldenable    
-set foldmethod=manual    
+"用空格键来开关折叠
+set foldenable
+set foldmethod=manual
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 set foldmarker={,}
 set foldmethod=marker
 set foldmethod=syntax
-set foldlevel=100       " Don't autofold anything 
+set foldlevel=100       " Don't autofold anything
 set foldopen-=search   " don't open folds when you search into them
 set foldopen-=undo     " don't open folds when you undo stuff
 
@@ -183,6 +184,16 @@ nnoremap <C-P> :bp<CR>
 " 关闭状态显示空白符号计数,这个对我用处不大"
 "let g:airline#extensions#whitespace#enabled = 0
 "let g:airline#extensions#whitespace#symbol = '!'
+
+" -----------------------------------------------------------------------------
+"  < undotree 插件配置 >
+" -----------------------------------------------------------------------------
+nmap <F5> :UndotreeToggle<cr>
+
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
 
 " -----------------------------------------------------------------------------
 "  < TagList 插件配置 >
@@ -307,7 +318,7 @@ let g:syntastic_error_symbol = '✗'      "set error or warning signs
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_check_on_open= 1
 let g:syntastic_check_on_close= 1
-let g:syntastic_aggregate_errors = 1 " collect errors when use multple checkers  
+let g:syntastic_aggregate_errors = 1 " collect errors when use multple checkers
 let g:syntastic_ignore_files=[".*\.py$"] "禁用syntastic来对python检查
 " for c++
 let g:syntastic_cpp_compiler = 'g++'
@@ -330,39 +341,39 @@ let g:tagbar_width = 30
 " 1.install gotags 'go get -u github.com/jstemmer/gotags'
 " 2.make sure `gotags` in you shell PATH, you can call check it with `which gotags`
 " for gotags. work with tagbar
-let g:tagbar_type_go = {  
-    \ 'ctagstype' : 'go',  
-    \ 'kinds'     : [  
-        \ 'p:package',  
-        \ 'i:imports:1',  
-        \ 'c:constants',  
-        \ 'v:variables',  
-        \ 't:types',  
-        \ 'n:interfaces',  
-        \ 'w:fields',  
-        \ 'e:embedded',  
-        \ 'm:methods',  
-        \ 'r:constructor',  
-        \ 'f:functions'  
-    \ ],  
-    \ 'sro' : '.',  
-    \ 'kind2scope' : {  
-        \ 't' : 'ctype',  
-        \ 'n' : 'ntype'  
-    \ },  
-    \ 'scope2kind' : {  
-        \ 'ctype' : 't',  
-        \ 'ntype' : 'n'  
-    \ },  
-    \ 'ctagsbin'  : 'gotags',  
-    \ 'ctagsargs' : '-sort -silent'  
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
 \ }
 
 " -----------------------------------------------------------------------------
 "  < Pydiction 插件配置 >
 " -----------------------------------------------------------------------------
 au BufNewFile,BufRead,BufEnter *.py let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
-au BufNewFile,BufRead,BufEnter *.py let g:pydiction_menu_height = 20 
+au BufNewFile,BufRead,BufEnter *.py let g:pydiction_menu_height = 20
 
 " -----------------------------------------------------------------------------
 " < 创建新文件时自动加入文件头部 >
@@ -380,12 +391,12 @@ func SetTitle()
         call append(line(".")+1,"# author : sphantix")
         call append(line(".")+2, "")
     else
-        call setline(1, "/*") 
+        call setline(1, "/*")
         call append(line("."), " * File Name: ".expand("%"))
         call append(line(".")+1, " * Author: Sphantix")
         call append(line(".")+2, " * Mail: sphantix@gmail.com")
         call append(line(".")+3, " * Created Time: ".strftime("%c"))
-        call append(line(".")+4, " */") 
+        call append(line(".")+4, " */")
         call append(line(".")+5, "")
     endif
 
