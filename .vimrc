@@ -203,7 +203,7 @@ endif
 "
 "
 "F8映射NERDTreeToggle快捷键
-nmap <F9> :NERDTreeToggle<CR>
+nmap <F8> :NERDTreeToggle<CR>
 
 let NERDTreeWinPos = 'right'
 let NERDTreeChDirMode=2
