@@ -47,6 +47,7 @@ Bundle 'Pydiction'
 Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
 Bundle "scrooloose/syntastic"
+Bundle 'ctrlpvim/ctrlp.vim'
 
 " c) 指定非Github的Git仓库的插件，需要使用git地址
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -179,7 +180,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "设置切换Buffer快捷键"
 nnoremap <C-N> :bn<CR>
-nnoremap <C-P> :bp<CR>
+nnoremap <C-B> :bp<CR>
 
 " 关闭状态显示空白符号计数,这个对我用处不大"
 "let g:airline#extensions#whitespace#enabled = 0
@@ -368,6 +369,22 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" -----------------------------------------------------------------------------
+"  < ctrlp 插件配置 >
+" -----------------------------------------------------------------------------
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
 
 " -----------------------------------------------------------------------------
 "  < Pydiction 插件配置 >
