@@ -34,7 +34,6 @@ Plugin 'mbbill/undotree'
 " 可以通过以下四种方式指定插件的来源
 " a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。
 "Bundle 'L9'
-Bundle 'taglist.vim'
 Bundle 'a.vim'
 Bundle 'The-NERD-tree'
 Bundle 'Pydiction'
@@ -195,20 +194,6 @@ if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
 endif
-
-" -----------------------------------------------------------------------------
-"  < TagList 插件配置 >
-" -----------------------------------------------------------------------------
-" 高效地浏览源码, 其功能就像vc中的workpace
-" 那里面列出了当前文件中的所有宏,全局变量, 函数名等
-
-"F8映射taglist快捷键
-nmap <F8> :Tlist<CR>
-
-let Tlist_Show_One_File=1                   "只显示当前文件的tags
-let Tlist_Enable_Fold_Column=0              "使taglist插件不显示左边的折叠行
-let Tlist_Exit_OnlyWindow=1                 "如果Taglist窗口是最后一个窗口则退出Vim
-let Tlist_File_Fold_Auto_Close=1            "自动折叠
 
 " -----------------------------------------------------------------------------
 "  < NERDtree 插件配置 >
