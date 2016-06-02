@@ -12,9 +12,13 @@ cp -rf ./.bashrc ~/
 cp -rf ./.bash_aliases ~/
 cp -rf ./.tool ~/
 cp -rf ./.gitconfig ~/
+cp -rf ./.spacemacs.d/ ~/
 
 #Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+#Install spacemacs config
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 #For differences
 if [ $os = "Darwin" ]; then
