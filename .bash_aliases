@@ -3,6 +3,12 @@ alias rebuild="~/.tool/script/rebuild"
 alias mkc="~/.tool/script/mkc"
 alias svnmeld="svn diff --diff-cmd=meld"
 
+# For tmux
+alias ta="tmux attach -t"
+alias ts="tmux new-session -s"
+alias tl="tmux list-sessions"
+
+# For Docker
 alias docker-pid="sudo docker inspect --format '{{.State.Pid}}'"
 alias docker-ip="sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
 
