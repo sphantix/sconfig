@@ -13,6 +13,7 @@ cp -rf ./.bash_aliases ~/
 cp -rf ./.tool ~/
 cp -rf ./.gitconfig ~/
 cp -rf ./.spacemacs.d/ ~/
+cp -rf ./.tmux.conf ~/
 
 #Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
