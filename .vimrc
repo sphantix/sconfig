@@ -79,6 +79,9 @@ set ruler                                             " show the cursor position
 set showcmd                                           " display incomplete commands
 set t_Co=256                                          " 256 colors
 
+nmap <leader><c-v> "+gp
+nmap <leader><c-c> "+y
+
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
@@ -320,7 +323,7 @@ let g:tagbar_expand = 1
 let g:tagbar_compact = 1
 let g:tagbar_singleclick = 1
 let g:tagbar_autoshowtag = 1
-let g:tagbar_ctags_bin = 'ctags'
+"let g:tagbar_ctags_bin = 'ctags'
 let g:tagbar_width = 30
 
 " go语言的tagbar配置
@@ -396,7 +399,7 @@ func SetTitle()
         call setline(1, "/*")
         call append(line("."), " * File Name: ".expand("%"))
         call append(line(".")+1, " * Author: Sphantix")
-        call append(line(".")+2, " * Mail: sphantix@gmail.com")
+        call append(line(".")+2, " * Mail: hangxu@antiy.cn")
         call append(line(".")+3, " * Created Time: ".strftime("%c"))
         call append(line(".")+4, " */")
         call append(line(".")+5, "")
