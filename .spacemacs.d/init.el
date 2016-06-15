@@ -23,13 +23,20 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      )
      better-defaults
-     emacs-lisp
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
      git
-     markdown
      org
      (shell :variables
             shell-default-height 30
@@ -40,19 +47,21 @@ values."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode)
      python
+     go
      java
-     cscope
+     markdown
+     emacs-lisp
+
+     gtags
      (chinese :variables
               chinese-enable-fctix t
               chinese-enable-youdao-dict t)
-     ;; dash
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      header2
                                       sr-speedbar
                                       fcitx
                                       quickrun
@@ -113,19 +122,19 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         zenburn
                          solarized-dark
                          monokai
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
-                         leuven
-                         zenburn)
+                         leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
+   dotspacemacs-default-font '("Bitstream Vera Sans Mono"
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -269,13 +278,77 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; temporiraliy set for file header
-  (defun insert_file_header ()
+  (defun make-cc-header ()
     (interactive )
-    (insert "/*\n@author: ChengYi\n")
-    (insert "@last-change-time: " (format-time-string "%Y:%m:%d"))
-    (insert "\n*/"))
-  (spacemacs/set-leader-keys "oh" 'insert_file_header)
+    (insert "/*\n")
+    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
+    (insert " * Author: Sphantix\n")
+    (insert " * Mail: hangxu@antiy.cn\n")
+    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
+    (insert " */\n")
+    (insert "\n")
+    (insert "#include \""(file-name-base (buffer-file-name))".h""\"\n\n"))
+  (defun make-h-header ()
+    (interactive )
+    (insert "/*\n")
+    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
+    (insert " * Author: Sphantix\n")
+    (insert " * Mail: hangxu@antiy.cn\n")
+    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
+    (insert " */\n")
+    (insert "\n")
+    (insert "#ifndef __" (upcase (file-name-base (buffer-file-name)))"_H__\n")
+    (insert "#define __" (upcase (file-name-base (buffer-file-name)))"_H__\n")
+    (insert "\n")
+    (insert "\n")
+    (insert "\n")
+    (insert "#endif /* __" (upcase (file-name-base (buffer-file-name)))"_H__ */"))
+  (defun make-sh-header ()
+    (interactive )
+    (insert "#!/bin/bash\n")
+    (insert "# author : sphantix\n")
+    (insert "# created time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
+    (insert "\n"))
+  (defun make-py-header ()
+    (interactive )
+    (insert "#!/usr/bin/env python\n")
+    (insert "# -*- coding: UTF-8 -*-\n")
+    (insert "# author : sphantix\n")
+    (insert "# created time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
+    (insert "\n"))
+  (defun make-go-header ()
+    (interactive )
+    (insert "/*\n")
+    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
+    (insert " * Author: Sphantix\n")
+    (insert " * Mail: hangxu@antiy.cn\n")
+    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
+    (insert " */\n")
+    (insert "\n"))
+  (defun make-header ()
+    (interactive)
+    "make header by file type."
+    (let ((ccfiletypes '("c" "cpp" "cc")))
+      (when (member (file-name-extension (buffer-file-name)) ccfiletypes)
+        (make-cc-header)))
+    (and (string= "h" (file-name-extension (buffer-file-name)))
+         (make-h-header))
+    (and (string= "sh-mode" major-mode)
+         (make-sh-header))
+    (and (string= "python-mode" major-mode)
+         (make-py-header))
+    (and (string= "go-mode" major-mode)
+         (make-go-header))
+    )
+  (defun auto-make-header ()
+    (interactive)
+    "Call `make-header' if current buffer is empty and is a file buffer."
+    (and (zerop (buffer-size)) (not buffer-read-only) (buffer-file-name)
+         (make-header)))
+  (spacemacs/set-leader-keys "oh" 'auto-make-header)
 
+  (message "%s" major-mode)
+  
   ;; similar to tagbar or taglist in vim
   (spacemacs/set-leader-keys "ob" 'sr-speedbar-toggle)
   (setq speedbar-show-unknown-files t)
@@ -287,16 +360,22 @@ you should place your code here."
 
 
   ;; config for package fcitx,comfortable for input chinese
-  (fcitx-aggressive-setup)
-  (setq fcitx-use-dbus t)
   (setq fcitx-active-evil-states '(insert emacs hybrid))
+  (fcitx-aggressive-setup)
+  ;; (setq fcitx-use-dbus t)
 
   ;;org-mode
   (setq org-agenda-files '("~/Dropbox/org"))
   (add-to-list 'load-path "~/Dropbox/org/")
+  (setq org-todo-keywords
+        '((sequence "INBOX(i)" "TODAY(t)" "NEXT(n)" "|" "CANCELED(c)")
+          (sequence "SCHEDULED(s)" "TOMORROW(T)"  "SOMEDAY(S)" "WAITING(w@)" "|" "DONE(d!)" )))
+  (setq org-M-RET-may-split-line nil)
+
 
   ;;quickrun
   (spacemacs/set-leader-keys "oq" 'quickrun)
+  (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
 
   ;; auto format
   (defun clang-format-for-filetype ()
@@ -326,13 +405,22 @@ you should place your code here."
      ))
   (set-indent 4)
   (setq-default c-default-style "k&r")
-
-  ;;use spacemacs as the git commits editor
   (global-git-commit-mode t)
-
-
   )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

@@ -8,6 +8,9 @@ alias ta="tmux attach -t"
 alias ts="tmux new-session -s"
 alias tl="tmux list-sessions"
 
+# For emacs
+alias emacs="env LC_CTYPE=zh_CN.UTF-8 emacs"
+
 # For Docker
 alias docker-pid="sudo docker inspect --format '{{.State.Pid}}'"
 alias docker-ip="sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
