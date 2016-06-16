@@ -18,55 +18,55 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence nil
-                      auto-completion-complete-with-key-sequence-delay 0.1
-                      auto-completion-private-snippets-directory nil
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-enable-snippets-in-popup t
-                      )
-     better-defaults
-     (colors :variables
-             colors-enable-nyan-cat-progress-bar t)
-     git
-     org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     version-control
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode)
-     python
-     go
-     java
-     markdown
-     emacs-lisp
+	 ;; ----------------------------------------------------------------
+	 ;; Example of useful layers you may want to use right away.
+	 ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+	 ;; <M-m f e R> (Emacs style) to install them.
+	 ;; ----------------------------------------------------------------
+	 (auto-completion :variables
+					  auto-completion-return-key-behavior 'complete
+					  auto-completion-tab-key-behavior 'cycle
+					  auto-completion-complete-with-key-sequence nil
+					  auto-completion-complete-with-key-sequence-delay 0.1
+					  auto-completion-private-snippets-directory nil
+					  auto-completion-enable-sort-by-usage t
+					  auto-completion-enable-help-tooltip t
+					  auto-completion-enable-snippets-in-popup t
+					  )
+	 better-defaults
+	 (colors :variables
+			 colors-enable-nyan-cat-progress-bar t)
+	 git
+	 org
+	 (shell :variables
+			shell-default-height 30
+			shell-default-position 'bottom)
+	 spell-checking
+	 syntax-checking
+	 version-control
+	 (c-c++ :variables
+			c-c++-default-mode-for-headers 'c++-mode)
+	 python
+	 go
+	 java
+	 markdown
+	 emacs-lisp
 
-     gtags
-     (chinese :variables
-              chinese-enable-fctix t
-              chinese-enable-youdao-dict t)
-     )
+	 gtags
+	 (chinese :variables
+			  chinese-enable-fctix t
+			  chinese-enable-youdao-dict t)
+	 )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      sr-speedbar
-                                      fcitx
-                                      quickrun
-                                      evil-vimish-fold
-                                      )
+									  sr-speedbar
+									  fcitx
+									  quickrun
+									  evil-vimish-fold
+									  )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -122,22 +122,22 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         zenburn
-                         solarized-dark
-                         monokai
-                         spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         leuven)
+						 zenburn
+						 solarized-dark
+						 monokai
+						 spacemacs-dark
+						 spacemacs-light
+						 solarized-light
+						 leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Bitstream Vera Sans Mono"
-                               :size 13
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+							   :size 13
+							   :weight normal
+							   :width normal
+							   :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -267,6 +267,25 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (define-coding-system-alias 'UTF-8 'utf-8)
+
+  (mapc 'load (directory-files "~/.spacemacs.d/customization/" t "\\.el\\'"))
+
+  (add-hook 'c-mode-hook
+			'(lambda ()
+			   (auto-make-header)))
+  (add-hook 'c++-mode-hook
+			'(lambda ()
+			   (auto-make-header)))
+  (add-hook 'sh-mode-hook
+			'(lambda ()
+			   (auto-make-header)))
+  (add-hook 'python-mode-hook
+			'(lambda ()
+			   (auto-make-header)))
+  (add-hook 'go-mode-hook
+			'(lambda ()
+			   (auto-make-header)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -277,78 +296,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; temporiraliy set for file header
-  (defun make-cc-header ()
-    (interactive )
-    (insert "/*\n")
-    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
-    (insert " * Author: Sphantix\n")
-    (insert " * Mail: hangxu@antiy.cn\n")
-    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
-    (insert " */\n")
-    (insert "\n")
-    (insert "#include \""(file-name-base (buffer-file-name))".h""\"\n\n"))
-  (defun make-h-header ()
-    (interactive )
-    (insert "/*\n")
-    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
-    (insert " * Author: Sphantix\n")
-    (insert " * Mail: hangxu@antiy.cn\n")
-    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
-    (insert " */\n")
-    (insert "\n")
-    (insert "#ifndef __" (upcase (file-name-base (buffer-file-name)))"_H__\n")
-    (insert "#define __" (upcase (file-name-base (buffer-file-name)))"_H__\n")
-    (insert "\n")
-    (insert "\n")
-    (insert "\n")
-    (insert "#endif /* __" (upcase (file-name-base (buffer-file-name)))"_H__ */"))
-  (defun make-sh-header ()
-    (interactive )
-    (insert "#!/bin/bash\n")
-    (insert "# author : sphantix\n")
-    (insert "# created time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
-    (insert "\n"))
-  (defun make-py-header ()
-    (interactive )
-    (insert "#!/usr/bin/env python\n")
-    (insert "# -*- coding: UTF-8 -*-\n")
-    (insert "# author : sphantix\n")
-    (insert "# created time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
-    (insert "\n"))
-  (defun make-go-header ()
-    (interactive )
-    (insert "/*\n")
-    (insert " * File Name: "(file-name-base (buffer-file-name))"."(file-name-extension (buffer-file-name))"\n")
-    (insert " * Author: Sphantix\n")
-    (insert " * Mail: hangxu@antiy.cn\n")
-    (insert " * Created Time: " (format-time-string "%a %d %b %Y %r %Z")"\n")
-    (insert " */\n")
-    (insert "\n"))
-  (defun make-header ()
-    (interactive)
-    "make header by file type."
-    (let ((ccfiletypes '("c" "cpp" "cc")))
-      (when (member (file-name-extension (buffer-file-name)) ccfiletypes)
-        (make-cc-header)))
-    (and (string= "h" (file-name-extension (buffer-file-name)))
-         (make-h-header))
-    (and (string= "sh-mode" major-mode)
-         (make-sh-header))
-    (and (string= "python-mode" major-mode)
-         (make-py-header))
-    (and (string= "go-mode" major-mode)
-         (make-go-header))
-    )
-  (defun auto-make-header ()
-    (interactive)
-    "Call `make-header' if current buffer is empty and is a file buffer."
-    (and (zerop (buffer-size)) (not buffer-read-only) (buffer-file-name)
-         (make-header)))
-  (spacemacs/set-leader-keys "oh" 'auto-make-header)
-
   (message "%s" major-mode)
-  
+
   ;; similar to tagbar or taglist in vim
   (spacemacs/set-leader-keys "ob" 'sr-speedbar-toggle)
   (setq speedbar-show-unknown-files t)
@@ -357,7 +306,6 @@ you should place your code here."
   (setq sr-speedbar-auto-refresh t)
   (setq sr-speedbar-right-side t)
   (setq speedbar-tag-hierarchy-method nil)
-
 
   ;; config for package fcitx,comfortable for input chinese
   (setq fcitx-active-evil-states '(insert emacs hybrid))
@@ -368,10 +316,9 @@ you should place your code here."
   (setq org-agenda-files '("~/Dropbox/org"))
   (add-to-list 'load-path "~/Dropbox/org/")
   (setq org-todo-keywords
-        '((sequence "INBOX(i)" "TODAY(t)" "NEXT(n)" "|" "CANCELED(c)")
-          (sequence "SCHEDULED(s)" "TOMORROW(T)"  "SOMEDAY(S)" "WAITING(w@)" "|" "DONE(d!)" )))
+		'((sequence "INBOX(i)" "TODAY(t)" "NEXT(n)" "|" "CANCELED(c)")
+		  (sequence "SCHEDULED(s)" "TOMORROW(T)"  "SOMEDAY(S)" "WAITING(w@)" "|" "DONE(d!)" )))
   (setq org-M-RET-may-split-line nil)
-
 
   ;;quickrun
   (spacemacs/set-leader-keys "oq" 'quickrun)
@@ -379,13 +326,12 @@ you should place your code here."
 
   ;; auto format
   (defun clang-format-for-filetype ()
-    "Run clang-format if the current file has a file extensions
+	"Run clang-format if the current file has a file extensions
   in the filetypes list."
-    (let ((filetypes '("c" "cpp")))
-      (when (member (file-name-extension (buffer-file-name)) filetypes)
-        (clang-format-buffer))))
+	(let ((filetypes '("c" "cpp")))
+	  (when (member (file-name-extension (buffer-file-name)) filetypes)
+		(clang-format-buffer))))
   (add-hook 'before-save-hook 'clang-format-for-filetype)
-
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -396,15 +342,19 @@ you should place your code here."
 
   ;; always enable indent-guide
   (spacemacs/toggle-indent-guide-globally-on)
-  (defun set-indent (n)
-    (setq-default
-     evil-shift-width n
-     tab-width n
-     python-indent n
-     c-basic-offset n
-     ))
-  (set-indent 4)
-  (setq-default c-default-style "k&r")
+  ;; Indent configuration
+  ;; For global
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode t)
+  (setq-default evil-shift-width 4)
+  ;; For c-mode
+  (setq c-default-style "user")
+  (setq c-basic-offset 4)
+  ;; For python-mode
+  (setq python-guess-indent nil
+        python-indent-offset 4
+        python-indent 4)
+
   (global-git-commit-mode t)
   )
 
