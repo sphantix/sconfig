@@ -18,55 +18,54 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-	 ;; ----------------------------------------------------------------
-	 ;; Example of useful layers you may want to use right away.
-	 ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-	 ;; <M-m f e R> (Emacs style) to install them.
-	 ;; ----------------------------------------------------------------
-	 (auto-completion :variables
-					  auto-completion-return-key-behavior 'complete
-					  auto-completion-tab-key-behavior 'cycle
-					  auto-completion-complete-with-key-sequence nil
-					  auto-completion-complete-with-key-sequence-delay 0.1
-					  auto-completion-private-snippets-directory nil
-					  auto-completion-enable-sort-by-usage t
-					  auto-completion-enable-help-tooltip t
-					  auto-completion-enable-snippets-in-popup t
-					  )
-	 better-defaults
-	 (colors :variables
-			 colors-enable-nyan-cat-progress-bar t)
-	 git
-	 org
-	 (shell :variables
-			shell-default-height 30
-			shell-default-position 'bottom)
-	 spell-checking
-	 syntax-checking
-	 version-control
-	 (c-c++ :variables
-			c-c++-default-mode-for-headers 'c++-mode)
-	 python
-	 go
-	 java
-	 markdown
-	 emacs-lisp
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+     ;; <M-m f e R> (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      )
+     better-defaults
+     (colors :variables
+             colors-enable-nyan-cat-progress-bar t)
+     git
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     spell-checking
+     syntax-checking
+     version-control
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode)
+     python
+     go
+     java
+     markdown
+     emacs-lisp
 
-	 gtags
-	 (chinese :variables
-			  chinese-enable-fctix t
-			  chinese-enable-youdao-dict t)
-	 )
+     cscope
+     (chinese :variables
+              chinese-enable-fctix t
+              chinese-enable-youdao-dict t)
+     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-									  sr-speedbar
-									  fcitx
-									  quickrun
-									  evil-vimish-fold
-									  )
+                                      sr-speedbar
+                                      fcitx
+                                      quickrun
+                                      evil-vimish-fold
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -122,22 +121,22 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-						 zenburn
-						 solarized-dark
-						 monokai
-						 spacemacs-dark
-						 spacemacs-light
-						 solarized-light
-						 leuven)
+                         zenburn
+                         solarized-dark
+                         monokai
+                         spacemacs-dark
+                         spacemacs-light
+                         solarized-light
+                         leuven)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Bitstream Vera Sans Mono"
-							   :size 13
-							   :weight normal
-							   :width normal
-							   :powerline-scale 1.1)
+                               :size 13
+                               :weight normal
+                               :width normal
+                               :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -233,7 +232,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode t
@@ -271,21 +270,27 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (mapc 'load (directory-files "~/.spacemacs.d/customization/" t "\\.el\\'"))
 
+  (setq-default make-header-author-name "Sphantix")
+  (setq-default make-header-author-email "hangxu@antiy.cn")
+
   (add-hook 'c-mode-hook
-			'(lambda ()
-			   (auto-make-header)))
+            '(lambda ()
+               (auto-make-header)))
   (add-hook 'c++-mode-hook
-			'(lambda ()
-			   (auto-make-header)))
+            '(lambda ()
+               (auto-make-header)))
   (add-hook 'sh-mode-hook
-			'(lambda ()
-			   (auto-make-header)))
+            '(lambda ()
+               (auto-make-header)))
   (add-hook 'python-mode-hook
-			'(lambda ()
-			   (auto-make-header)))
+            '(lambda ()
+               (auto-make-header)))
   (add-hook 'go-mode-hook
-			'(lambda ()
-			   (auto-make-header)))
+            '(lambda ()
+               (auto-make-header)))
+  (add-hook 'java-mode-hook
+            '(lambda ()
+               (auto-make-header)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -312,25 +317,20 @@ you should place your code here."
   (fcitx-aggressive-setup)
   ;; (setq fcitx-use-dbus t)
 
-  ;;org-mode
-  (setq org-agenda-files '("~/Dropbox/org"))
-  (add-to-list 'load-path "~/Dropbox/org/")
-  (setq org-todo-keywords
-		'((sequence "INBOX(i)" "TODAY(t)" "NEXT(n)" "|" "CANCELED(c)")
-		  (sequence "SCHEDULED(s)" "TOMORROW(T)"  "SOMEDAY(S)" "WAITING(w@)" "|" "DONE(d!)" )))
-  (setq org-M-RET-may-split-line nil)
-
   ;;quickrun
   (spacemacs/set-leader-keys "oq" 'quickrun)
+  ;;youdao
   (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
+  ;;hl-todo
+  (spacemacs/set-leader-keys "oh" 'hl-todo-occur)
 
   ;; auto format
   (defun clang-format-for-filetype ()
-	"Run clang-format if the current file has a file extensions
+    "Run clang-format if the current file has a file extensions
   in the filetypes list."
-	(let ((filetypes '("c" "cpp")))
-	  (when (member (file-name-extension (buffer-file-name)) filetypes)
-		(clang-format-buffer))))
+    (let ((filetypes '("c" "cpp")))
+      (when (member (file-name-extension (buffer-file-name)) filetypes)
+        (clang-format-buffer))))
   (add-hook 'before-save-hook 'clang-format-for-filetype)
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
@@ -345,7 +345,7 @@ you should place your code here."
   ;; Indent configuration
   ;; For global
   (setq-default tab-width 4)
-  (setq-default indent-tabs-mode t)
+  ;; (setq-default indent-tabs-mode t)
   (setq-default evil-shift-width 4)
   ;; For c-mode
   (setq c-default-style "user")
@@ -356,6 +356,10 @@ you should place your code here."
         python-indent 4)
 
   (global-git-commit-mode t)
+
+  ;; display time
+  (setq display-time-day-and-date t)
+  (display-time-mode t)
   )
 
 

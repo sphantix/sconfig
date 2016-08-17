@@ -3,23 +3,20 @@
 print_usage()
 {
     echo "Use as below:"
-    echo "     rebuild [c|cpp|python]"
+    echo "     rebuild [c|cpp]"
 }
 
 if [ $# -ne 1 ]; then
-    print_usage; 
+    print_usage;
     exit 1;
 fi
 
 if [ $1 = "c" ]; then
-    ctags -R --c-kinds=+p --fields=+aS --extra=+q --sort=foldcase
+    ctags-exuberant -R --c-kinds=+p --fields=+aS --extra=+q --sort=foldcase
     find $(pwd) -name "*.h" -o -name "*.c" -o -name "*.S" > cscope.files
 elif [ $1 = "cpp" ]; then
-    ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --langmap=c++:+.inl .
+    ctags-exuberant -R --c++-kinds=+p --fields=+iaS --extra=+q --langmap=c++:+.inl .
     find $(pwd) -name "*.h" -o -name "*.hpp" -o -name "*.cc" -o -name "*.cpp" -o -name "*.cxx"> cscope.files
-elif [ $1 = "python" ]; then
-    find  . -name \*.py -print | xargs ~/.tool/script/ptags
-    find . -name "*.py" | grep -v "__init__.py" > cscope.files
 else
     print_usage;
     exit 1;
