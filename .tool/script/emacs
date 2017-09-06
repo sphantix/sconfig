@@ -1,0 +1,5 @@
+#!/bin/bash
+# author : sphantix
+# created time: Thu 24 Aug 2017 05:41:44 PM CST
+
+setsid env LC_CTYPE=zh_CN.UTF-8 emacs $1 > /dev/null 2>&1 &

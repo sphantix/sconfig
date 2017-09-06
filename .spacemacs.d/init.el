@@ -18,11 +18,14 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
+     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     asm
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
@@ -36,7 +39,9 @@ values."
      better-defaults
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
+     games
      git
+     imenu-list
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -52,8 +57,8 @@ values."
      emacs-lisp
 
      cscope
-     (chinese :variables
-              chinese-enable-fctix t
+     (chinese :packages youdao-dictionary fcitx
+              :variables chinese-enable-fctix t
               chinese-enable-youdao-dict t)
      )
    ;; List of additional packages that will be installed without being
@@ -65,6 +70,7 @@ values."
                                       fcitx
                                       quickrun
                                       evil-vimish-fold
+                                      youdao-dictionary
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -257,6 +263,11 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
+
+   ;; If non nil the frame is maximized when Emacs starts up.
+   ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
+   ;; (default nil) (Emacs 24.4+ only)
+   dotspacemacs-maximized-at-startup t
    ))
 
 (defun dotspacemacs/user-init ()
@@ -291,6 +302,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'java-mode-hook
             '(lambda ()
                (auto-make-header)))
+
+  ;; For imenu-list
+  (setq imenu-list-focus-after-activation t
+        imenu-list-size 0.3
+        imenu-list-position 'left)
   )
 
 (defun dotspacemacs/user-config ()
@@ -314,7 +330,7 @@ you should place your code here."
 
   ;; config for package fcitx,comfortable for input chinese
   (setq fcitx-active-evil-states '(insert emacs hybrid))
-  (fcitx-aggressive-setup)
+  ;; (fcitx-aggressive-setup)
   ;; (setq fcitx-use-dbus t)
 
   ;;quickrun
@@ -357,6 +373,25 @@ you should place your code here."
 
   (global-git-commit-mode t)
 
+  (defun magit-push-to-gerrit-master ()
+    (interactive)
+    (magit-git-command "push origin HEAD:refs/for/master" (magit-toplevel)))
+
+  (defun magit-push-to-gerrit-develop ()
+    (interactive)
+    (magit-git-command "push origin HEAD:refs/for/develop" (magit-toplevel)))
+
+  (with-eval-after-load 'magit
+    (progn
+      (magit-define-popup-action 'magit-push-popup
+        ?g
+        "Push to gerrit master"
+        'magit-push-to-gerrit-master)
+      (magit-define-popup-action 'magit-push-popup
+        ?d
+        "Push to gerrit develop"
+        'magit-push-to-gerrit-develop)))
+
   ;; display time
   (setq display-time-day-and-date t)
   (display-time-mode t)
@@ -370,7 +405,18 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files nil))
+ '(org-agenda-files nil)
+ '(flycheck-gcc-include-path
+   (quote
+    (
+     "./"
+     "./include"
+     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libwheeljack/include"
+     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libtoolkit/include"
+     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libcapstone/include"
+     "/home/sphantix/Android/Sdk/ndk-bundle/platforms/android-24/arch-arm64/usr/include"
+     )))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

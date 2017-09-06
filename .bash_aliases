@@ -1,5 +1,6 @@
 # User specific aliases and functions
 alias rebuild="~/.tool/script/rebuild"
+alias flash_bootimage="~/.tool/script/flash_bootimage"
 alias mkc="~/.tool/script/mkc"
 alias svnmeld="svn diff --diff-cmd=meld"
 
@@ -7,9 +8,10 @@ alias svnmeld="svn diff --diff-cmd=meld"
 alias ta="tmux attach -t"
 alias ts="tmux new-session -s"
 alias tl="tmux list-sessions"
+alias androidide="~/android-studio/bin/studio.sh &"
 
 # For emacs
-alias emacs="env LC_CTYPE=zh_CN.UTF-8 emacs"
+alias emacs="~/.tool/script/emacs"
 
 # For Docker
 alias docker-pid="sudo docker inspect --format '{{.State.Pid}}'"

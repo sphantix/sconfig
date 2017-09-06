@@ -1,0 +1,16 @@
+#!/bin/sh
+
+print_usage()
+{
+    echo "Use as below:"
+    echo "     adbgetmaps [process name]"
+}
+
+if [ $# -ne 1 ]; then
+    print_usage; 
+    exit 1;
+fi
+
+PID=`adb shell ps | grep "$1" | awk '{print $2}'`
+
+adb shell cat /proc/$PID/smaps

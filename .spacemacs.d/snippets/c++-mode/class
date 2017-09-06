@@ -3,8 +3,8 @@
 # key: cls
 # --
 class ${1:Name} {
-public:
-    ${1:$(yas/substr yas-text "[^: ]*")}();
-    ${2:virtual ~${1:$(yas/substr yas-text "[^: ]*")}();}
+    public:
+        ${1:$(yas/substr yas-text "[^: ]*")}();
+        ${2:virtual ~${1:$(yas/substr yas-text "[^: ]*")}();}
 };
 $0

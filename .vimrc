@@ -67,6 +67,7 @@ au BufNewFile,BufRead,BufEnter *.py set tags+=~/.vim/tags/python  "omnicppcomple
 " -----------------------------------------------------------------------------
 "  < 环境配置 >
 " -----------------------------------------------------------------------------
+"let mapleader=","
 syntax on
 set ic
 set background=dark

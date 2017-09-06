@@ -98,6 +98,16 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# All PATH definitions.
+if [ -f ~/.bash_environment ]; then
+    . ~/.bash_environment
+fi
+
+# All functions
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -108,3 +118,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+chmod +x ~/.vocab
+~/.vocab
+
+eval "$(thefuck --alias)"
+# You can use whatever you want as an alias, like for Mondays:
+eval "$(thefuck --alias FUCK)"
