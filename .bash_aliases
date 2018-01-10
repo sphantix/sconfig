@@ -2,6 +2,7 @@
 alias rebuild="~/.tool/script/rebuild"
 alias flash_bootimage="~/.tool/script/flash_bootimage"
 alias mkc="~/.tool/script/mkc"
+alias genplatformsig="~/.tool/script/genplatformsig"
 alias svnmeld="svn diff --diff-cmd=meld"
 
 # For tmux

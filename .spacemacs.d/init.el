@@ -18,6 +18,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
+     ruby
      html
      javascript
      ;; ----------------------------------------------------------------
@@ -50,7 +52,10 @@ values."
      version-control
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode)
-     python
+     (python :variables
+             python-enable-yapf-format-on-save t
+             python-sort-imports-on-save t)
+     shell-scripts
      go
      java
      markdown
@@ -60,6 +65,8 @@ values."
      (chinese :packages youdao-dictionary fcitx
               :variables chinese-enable-fctix t
               chinese-enable-youdao-dict t)
+     org
+     commons
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -94,17 +101,17 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https nil
+   dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. (default t)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'hybrid
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -117,10 +124,12 @@ values."
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects bookmarks)
-   ;; Number of recent files to show in the startup buffer. Ignored if
-   ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
-   dotspacemacs-startup-recent-list-size 5
+   dotspacemacs-startup-lists '((recents . 8)
+                                (projects . 6)
+                                (todos . 5)
+                                (agenda . 8))
+   ;; True if the home buffer should respond to resize events.
+   dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes wthe first of the list is loaded when spacemacs starts.
@@ -145,6 +154,11 @@ values."
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
+   ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
+   ;; (default "SPC")
+   dotspacemacs-emacs-command-key "SPC"
+   ;; The key used for Vim Ex commands (default ":")
+   dotspacemacs-ex-command-key ":"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
    dotspacemacs-emacs-leader-key "M-m"
@@ -152,7 +166,7 @@ values."
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m)
+   ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
@@ -177,6 +191,10 @@ values."
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
    dotspacemacs-auto-resume-layouts nil
+   ;; Size (in MB) above which spacemacs will prompt to open the large file
+   ;; literally to avoid performance issues. Opening a file literally means that
+   ;; no major mode or minor modes are active. (default is 1)
+   dotspacemacs-large-file-size 1
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -239,6 +257,9 @@ values."
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
    dotspacemacs-line-numbers 'relative
+   ;; Code folding method. Possible values are `evil' and `origami'.
+   ;; (default 'evil)
+   dotspacemacs-folding-method 'evil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode t
@@ -277,31 +298,11 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (define-coding-system-alias 'UTF-8 'utf-8)
 
-  (mapc 'load (directory-files "~/.spacemacs.d/customization/" t "\\.el\\'"))
-
-  (setq-default make-header-author-name "Sphantix")
-  (setq-default make-header-author-email "hangxu@antiy.cn")
-
-  (add-hook 'c-mode-hook
-            '(lambda ()
-               (auto-make-header)))
-  (add-hook 'c++-mode-hook
-            '(lambda ()
-               (auto-make-header)))
-  (add-hook 'sh-mode-hook
-            '(lambda ()
-               (auto-make-header)))
-  (add-hook 'python-mode-hook
-            '(lambda ()
-               (auto-make-header)))
-  (add-hook 'go-mode-hook
-            '(lambda ()
-               (auto-make-header)))
-  (add-hook 'java-mode-hook
-            '(lambda ()
-               (auto-make-header)))
+  (setq configuration-layer--elpa-archives
+        '(("melpa-cn" . "https://elpa.zilongshanren.com/melpa/")
+          ("org-cn"   . "https://elpa.zilongshanren.com/org/")
+          ("gnu-cn"   . "https://elpa.zilongshanren.com/gnu/")))
 
   ;; For imenu-list
   (setq imenu-list-focus-after-activation t
@@ -317,10 +318,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (message "%s" major-mode)
 
   ;; similar to tagbar or taglist in vim
-  (spacemacs/set-leader-keys "ob" 'sr-speedbar-toggle)
   (setq speedbar-show-unknown-files t)
   (setq speedbar-use-images nil)
   (setq sr-speedbar-width 30)
@@ -333,13 +332,6 @@ you should place your code here."
   ;; (fcitx-aggressive-setup)
   ;; (setq fcitx-use-dbus t)
 
-  ;;quickrun
-  (spacemacs/set-leader-keys "oq" 'quickrun)
-  ;;youdao
-  (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
-  ;;hl-todo
-  (spacemacs/set-leader-keys "oh" 'hl-todo-occur)
-
   ;; auto format
   (defun clang-format-for-filetype ()
     "Run clang-format if the current file has a file extensions
@@ -348,13 +340,6 @@ you should place your code here."
       (when (member (file-name-extension (buffer-file-name)) filetypes)
         (clang-format-buffer))))
   (add-hook 'before-save-hook 'clang-format-for-filetype)
-
-  ;; Make evil-mode up/down operate in screen lines instead of logical lines
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-  ;; Also in visual mode
-  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
   ;; always enable indent-guide
   (spacemacs/toggle-indent-guide-globally-on)
@@ -373,28 +358,13 @@ you should place your code here."
 
   (global-git-commit-mode t)
 
-  (defun magit-push-to-gerrit-master ()
-    (interactive)
-    (magit-git-command "push origin HEAD:refs/for/master" (magit-toplevel)))
-
-  (defun magit-push-to-gerrit-develop ()
-    (interactive)
-    (magit-git-command "push origin HEAD:refs/for/develop" (magit-toplevel)))
-
-  (with-eval-after-load 'magit
-    (progn
-      (magit-define-popup-action 'magit-push-popup
-        ?g
-        "Push to gerrit master"
-        'magit-push-to-gerrit-master)
-      (magit-define-popup-action 'magit-push-popup
-        ?d
-        "Push to gerrit develop"
-        'magit-push-to-gerrit-develop)))
-
   ;; display time
   (setq display-time-day-and-date t)
   (display-time-mode t)
+
+  ;;evil-surround
+  (setq-default evil-surround-pairs-alist (cons '(?> . ("<<" . ">>"))
+                                                evil-surround-pairs-alist))
   )
 
 
@@ -405,12 +375,16 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files nil)
  '(flycheck-gcc-include-path
    (quote
     (
      "./"
      "./include"
+     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libbasic/include"
+     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libinotifytools/include"
+     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libminizip"
+     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libexploitinfo/include"
+     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/zlib/src"
      "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libwheeljack/include"
      "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libtoolkit/include"
      "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libcapstone/include"

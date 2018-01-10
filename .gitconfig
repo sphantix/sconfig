@@ -1,6 +1,6 @@
-[user]  
-    name = sphantix 
-    email = sphantix@gmail.com
+[user]
+    name = hangxu
+    email = hangxu@antiy.cn
 [core]
 	editor = vim
 [color]
@@ -19,6 +19,7 @@
     brd = branch -d
     unstage = reset HEAD
     last = log -1 HEAD
+    pushwq = push origin HEAD:refs/for/master
 [diff]
     tool = meld
 	external = ~/.tool/script/git_meld

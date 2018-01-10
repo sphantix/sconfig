@@ -1,0 +1,21 @@
+#!/bin/bash
+# author : sphantix
+# created time: Wed 13 Sep 2017 03:17:54 PM CST
+
+myFile="platform.pem"
+
+if [ -f $myFile ]
+then
+    echo "存在platform.pem platform.p12 platform.keystore，先删除！"
+    rm -f platform.pem platform.p12 platform.keystore
+fi
+
+echo "开始执行!!"
+openssl pkcs8 -inform DER -nocrypt -in platform.pk8 -out platform.pem
+echo "生成 platform.pem"
+
+openssl pkcs12 -export -in platform.x509.pem -out platform.p12 -inkey platform.pem -password pass:android -name androiddebugkey
+echo "生成 platform.p12"
+
+keytool -importkeystore -deststorepass android -destkeystore ./platform.keystore -srckeystore platform.p12 -srcstoretype PKCS12 -srcstorepass android
+echo "生成  platform.keystore 成功"
