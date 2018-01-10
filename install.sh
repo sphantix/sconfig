@@ -19,6 +19,11 @@ copy_file() {
     else
         cp -rf ./.fonts ~/
     fi
+
+    #copy system files
+    sudo cp ./sys/51-android.rules /etc/udev/rules.d/
+    sudo cp ./sys/hosts /etc/hosts
+    sudo cp ./sys/proxychains.conf /etc/
 }
 
 git_init() {

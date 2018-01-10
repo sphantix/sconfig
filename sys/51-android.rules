@@ -1,0 +1,148 @@
+######################################################
+#  Project:  http://code.google.com/p/51-android/    #
+#  File:     /etc/udev/rules.d/51-android.rules      #
+#  Author:   sphantix <yanghui1986527@gmail.com>    #
+#  Date:     2010.06.07                              #
+######################################################
+
+#Acer
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0502", MODE="0660", OWNER="sphantix"
+
+
+#ASUS
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0b05", MODE="0660", OWNER="sphantix"
+
+
+#Dell
+SUBSYSTEM=="usb", ATTRS{idVendor}=="413", MODE="0660", OWNER="sphantix"
+
+
+#Foxconn
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0489", MODE="0660", OWNER="sphantix"
+
+
+#Fujitsu/Fujitsu Toshiba
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04c5", MODE="0660", OWNER="sphantix"
+
+
+#Garmin-Asus
+SUBSYSTEM=="usb", ATTRS{idVendor}=="091e", MODE="0660", OWNER="sphantix"
+
+
+#Google
+SUBSYSTEM=="usb", ATTRS{idVendor}=="18d1", MODE="0660", OWNER="sphantix"
+
+
+#Hisense
+SUBSYSTEM=="usb", ATTRS{idVendor}=="109b", MODE="0660", OWNER="sphantix"
+
+#HTC
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0bb4", MODE="0660", OWNER="sphantix"
+
+#HTC HERO
+
+
+#Huawei
+SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", MODE="0660", OWNER="sphantix"
+
+
+#K-Touch
+SUBSYSTEM=="usb", ATTRS{idVendor}=="24e3", MODE="0660", OWNER="sphantix"
+
+
+#KT Tech
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2116", MODE="0660", OWNER="sphantix"
+
+
+#Kyocera
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0482", MODE="0660", OWNER="sphantix"
+
+
+#Lenovo
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2006", MODE="0660", OWNER="sphantix"
+
+
+#LG
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1004", MODE="0660", OWNER="sphantix"
+
+
+#Motorola
+SUBSYSTEM=="usb", ATTRS{idVendor}=="22b8", MODE="0660", OWNER="sphantix"
+
+
+#NEC
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0409", MODE="0660", OWNER="sphantix"
+
+
+#Nook
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2080", MODE="0660", OWNER="sphantix"
+
+
+#Nvidia
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0955", MODE="0660", OWNER="sphantix"
+
+
+#OTGV
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2257", MODE="0660", OWNER="sphantix"
+
+
+#Pantech
+SUBSYSTEM=="usb", ATTRS{idVendor}=="10a9", MODE="0660", OWNER="sphantix"
+
+
+#Pegatron
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1d4d", MODE="0660", OWNER="sphantix"
+
+
+#Philips
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0471", MODE="0660", OWNER="sphantix"
+
+
+#PMC-Sierra
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04da", MODE="0660", OWNER="sphantix"
+
+
+#Qualcomm
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05c6", MODE="0660", OWNER="sphantix"
+
+
+#SK Telesys
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1f53", MODE="0660", OWNER="sphantix"
+
+
+#Samsung
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04e8", MODE="0660", OWNER="sphantix"
+
+
+#Sharp
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04dd", MODE="0660", OWNER="sphantix"
+
+
+#Sony
+SUBSYSTEM=="usb", ATTRS{idVendor}=="054c", MODE="0660", OWNER="sphantix"
+
+
+#Sony Ericsson
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0fce", MODE="0660", OWNER="sphantix"
+
+
+#Teleepoch
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2340", MODE="0660", OWNER="sphantix"
+
+
+#Toshiba
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0930", MODE="0660", OWNER="sphantix"
+
+
+#ZTE
+SUBSYSTEM=="usb", ATTRS{idVendor}=="19d2", MODE="0660", OWNER="sphantix"
+
+
+#Le
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b0e", MODE="0660", OWNER="sphantix"
+
+#360
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2c73", MODE="0660", OWNER="sphantix"
+
+#Meizu
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2a45", MODE="0660", OWNER="sphantix"
