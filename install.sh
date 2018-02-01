@@ -38,12 +38,22 @@ git_init() {
     fi
 }
 
+install_softwares() {
+    sudo apt update
+    sudo apt-get install ctags
+    sudo apt-get install cscope
+    sudo apt install python3-dev python3-pip
+    sudo pip3 install thefuck
+}
+
 # main routines
 echo "install all config.."
 # copy files & dirs
 copy_file
 # git clone
 git_init
+# install softwares
+install_softwares
 
 # For differences
 if [ $os = "Darwin" ]; then

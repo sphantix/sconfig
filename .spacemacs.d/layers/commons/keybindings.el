@@ -14,6 +14,15 @@
 ;; artist-mode
 (spacemacs/set-leader-keys "oa" 'artist-mode)
 
+;; remove ^M in emacs
+(spacemacs/set-leader-keys "om" 'delete-carrage-returns)
+(defun delete-carrage-returns ()
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (while (search-forward "\r" nil :noerror)
+      (replace-match ""))))
+
 ;;insert-state use control+l to move right
 (define-key evil-insert-state-map (kbd "C-l") 'right-char)
 
