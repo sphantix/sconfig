@@ -1,4 +1,3 @@
-PATH=$PATH:~/Android/Sdk/tools/:~/Android/Sdk/platform-tools/:/home/sphantix/Android/Sdk/ndk-bundle/
-PATH=$PATH:~/work/kernel_exploit/arm-linux-androideabi-4.6/bin/:~/work/kernel_exploit/aarch64-linux-android-4.9/bin/:/home/sphantix/work/toolchains/gnu-arm/bin/
+PATH=$PATH:~/Android/Sdk/tools/:~/Android/Sdk/platform-tools/:/home/sphantix/Android/Sdk/ndk-bundle/:~/work/kernel_exploit/arm-linux-androideabi-4.6/bin/:~/work/kernel_exploit/aarch64-linux-android-4.9/bin/:/home/sphantix/work/toolchains/gnu-arm/bin/:/home/sphantix/go/bin
 
 export GOPATH=/home/sphantix/go

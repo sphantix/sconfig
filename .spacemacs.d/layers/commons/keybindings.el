@@ -14,6 +14,9 @@
 ;; artist-mode
 (spacemacs/set-leader-keys "oa" 'artist-mode)
 
+;; solidity estimate gas
+(spacemacs/set-leader-keys "og" 'solidity-estimate-gas-at-point)
+
 ;; remove ^M in emacs
 (spacemacs/set-leader-keys "om" 'delete-carrage-returns)
 (defun delete-carrage-returns ()

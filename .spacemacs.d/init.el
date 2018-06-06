@@ -51,12 +51,16 @@ values."
      syntax-checking
      version-control
      (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode)
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t)
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t)
      shell-scripts
-     go
+     (go :variables
+         go-use-gometalinter t
+         gofmt-command "goimports"
+         go-tab-width 4)
      java
      markdown
      emacs-lisp
@@ -78,6 +82,7 @@ values."
                                       quickrun
                                       evil-vimish-fold
                                       youdao-dictionary
+                                      solidity-mode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -340,6 +345,7 @@ you should place your code here."
       (when (member (file-name-extension (buffer-file-name)) filetypes)
         (clang-format-buffer))))
   (add-hook 'before-save-hook 'clang-format-for-filetype)
+  (add-hook 'c++-mode-hook (lambda()(setq flycheck-clang-language-standard "c++11")))
 
   ;; always enable indent-guide
   (spacemacs/toggle-indent-guide-globally-on)
@@ -377,24 +383,15 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(flycheck-gcc-include-path
    (quote
-    (
-     "./"
-     "./include"
-     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libbasic/include"
-     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libinotifytools/include"
-     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libminizip"
-     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libexploitinfo/include"
-     "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/zlib/src"
-     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libwheeljack/include"
-     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libtoolkit/include"
-     "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libcapstone/include"
-     "/home/sphantix/Android/Sdk/ndk-bundle/platforms/android-24/arch-arm64/usr/include"
-     )))
- )
+    ("./" "./include" "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libbasic/include" "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libinotifytools/include" "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libminizip" "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/libexploitinfo/include" "/media/sphantix/Extention/code/projects/defensor/apps/sdk/defensor/app/src/main/jni/zlib/src" "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libwheeljack/include" "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libtoolkit/include" "/media/sphantix/Extention/code/projects/wheeljack3/cases/libs/libcapstone/include" "/home/sphantix/Android/Sdk/ndk-bundle/platforms/android-24/arch-arm64/usr/include")))
+ '(package-selected-packages
+   (quote
+    (flycheck-gometalinter solidity-mode youdao-dictionary names chinese-word-at-point yapfify yaml-mode xterm-color x86-lookup ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill typit mmt toc-org tagedit sudoku sr-speedbar spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters quickrun pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox spinner pacmacs orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree nasm-mode mwim multi-term move-text mmm-mode minitest markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc insert-shebang info+ indent-guide imenu-list hydra hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-cscope xcscope helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip flycheck pkg-info epl flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-vimish-fold vimish-fold evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub let-alist with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-shell company-quickhelp pos-tip company-go go-mode company-emacs-eclim eclim company-c-headers company-anaconda company column-enforce-mode color-identifiers-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup 2048-game zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F"))))
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
